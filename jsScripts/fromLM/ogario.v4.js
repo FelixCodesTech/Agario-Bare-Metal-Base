@@ -3922,10 +3922,13 @@ window.MouseClicks=[];
             this.setHudScale();
         },
         setHudColors() {
-            var css = '.hud-main-color,#top5-hud a,#target-panel-hud a:hover,#target-panel-hud a.active,#message-menu a{color:' + defaultSettings.hudMainColor + '}.hud,'+
-			'.hud-b,#.emoji-picker{background-color:' + defaultSettings.hudColor + '}.hud,.hud-b,#top5-hud a:hover,#target-panel-hud a{color:' + defaultSettings.hudTextColor + '}.stats-hud-color{color:' + defaultSettings.statsHudColor + '}.time-hud-color{color:' + defaultSettings.timeHudColor + '}.top5-mass-color{color:' + defaultSettings.top5MassColor + '}#leaderboard-positions .me{color:' + defaultSettings.lbMeColor + '}#leaderboard-positions .teammate{color:' + defaultSettings.lbTeammateColor2 + '}';
-            $('.top5-mass-bar').css('background-color', $('#hudMainColor')[0].value)
-            this.addCustomCSS('hudCSS', css);
+            // "Hello Felix, the stuff below is trash and we don't need it. I'm going to remove it." -Felix 21.4.2024
+            // "Also, I love js! you dont have to return anything and this empty function still works!" -also Felix 21.4.2024
+            //
+            // var css = '.hud-main-color,#top5-hud a,#target-panel-hud a:hover,#target-panel-hud a.active,#message-menu a{color:' + defaultSettings.hudMainColor + '}.hud,'+
+			// '.hud-b,#.emoji-picker{background-color:' + defaultSettings.hudColor + '}.hud,.hud-b,#top5-hud a:hover,#target-panel-hud a{color:' + defaultSettings.hudTextColor + '}.stats-hud-color{color:' + defaultSettings.statsHudColor + '}.time-hud-color{color:' + defaultSettings.timeHudColor + '}.top5-mass-color{color:' + defaultSettings.top5MassColor + '}#leaderboard-positions .me{color:' + defaultSettings.lbMeColor + '}#leaderboard-positions .teammate{color:' + defaultSettings.lbTeammateColor2 + '}';
+            // $('.top5-mass-bar').css('background-color', $('#hudMainColor')[0].value)
+            // this.addCustomCSS('hudCSS', css);
         },
         setHudFont() {
             this.setFont('hudFont', defaultSettings.hudFont);
