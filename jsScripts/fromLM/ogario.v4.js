@@ -3881,19 +3881,10 @@ window.MouseClicks=[];
             if (defaultSettings.customCursor) var css = '*{cursor:url(' + defaultSettings.customCursor + '), auto !important}';
             else css = '*{cursor: auto}';
             this.addCustomCSS('cursorCSS', css);
-        },
-        setMenu() {
-            this.setMenuOpacity();
-            this.setMenuMainColor();
-            this.setMenuPanelColor();
-            this.setMenuTextColor();
-            this.setMenuButtons();
-            this.setMenuBg();
         },	
 		changeIndicators(value) {},	
         changeMenuPreset(name) {
             this.changePreset(name, themeMenus);
-            this.setMenu();
         },
         changeGraphics(value) {
 			
@@ -4024,7 +4015,6 @@ window.MouseClicks=[];
             this.setBgColor();
             this.setCustomBackground();
             this.setCustomCursor();
-            this.setMenu();
             this.setHud();
             this.setChat();
             this.setMiniMap();
@@ -5645,256 +5635,6 @@ window.MouseClicks=[];
                     if (window.i18n_dict.en.hasOwnProperty(lang) && textLanguage.hasOwnProperty(lang)) {
                         window.i18n_dict.en[lang] = textLanguage[lang];
                     }
-                }
-            }
-        },
-        setMenu() {
-            const app = this;
-            document.title = this.name;
-            $("#mainPanel").before('<div id="exp-bar" class="agario-panel"><span class="ogicon-user"></span><div class="agario-exp-bar progress"><span class="progress-bar-text">agar.io level: <strong class="progress-bar-star3">0</strong></span><div class="progress-bar progress-bar-striped" style="width: 0%;"></div></div></div>'+
-			'<div id="exp-bar" class="agario-panel"><div class="agario-exp-bar progress"><span class="progress-bar-text">LM level: <strong class="progress-bar-star2">0</strong></span><div class="progress-bar progress-bar-striped2" style="width: 0%;"></div></div></div>'+
-			'<div id="main-menu" class="agario-panel"><ul class="menu-tabs"><li class="start-tab active"><a href="#main-panel" class="active ogicon-home" data-toggle="tab-tooltip" title="' +
-                textLanguage.start + '"></a></li><li class="settings-tab"><a href="#og-settings" class="ogicon-cog" data-toggle="tab-tooltip" title="' + textLanguage.settings + '"></a></li><li class="theme-tab"><a href="#theme" class="ogicon-droplet" data-toggle="tab-tooltip" title="' + textLanguage.theme + '"></a></li><li class="hotkeys-tab"><a href="#" class="hotkeys-link ogicon-keyboard" data-toggle="tab-tooltip" title="' +
-                textLanguage.hotkeys + '"></a></li><li class="music-tab"><a href="#music" class="ogicon-music" data-toggle="tab-tooltip" title="' + textLanguage.sounds + '"></a></li><li class="profile-tab"><a href="#profile" class="ogicon-user" data-toggle="tab-tooltip" title="' + textLanguage.profile + '"></a></li></ul><div id="main-panel" class="menu-panel"></div><div id="profile" class="menu-panel"></div><div id="og-settings" class="menu-panel"><div class="submenu-panel"></div></div><div id="theme" class="menu-panel"></div><div id="music" class="menu-panel"></div></div>');
-            $("#main-panel").append('<a href="#" class="quick quick-menu ogicon-menu"></a><a href="#" class="quick quick-bots ogicon-trophy" style="display: none;"></a>' +
-                '<a href="#" class="quick quick-replay ogicon-file-play"></a>' +
-                '<a href="#" class="quick quick-skins ogicon-images"></a><div id="profiles"><div id="prev-profile"></div><div id="skin-preview"></div><div id="next-profile"></div></div>');
-            $("#mainPanel div[role=form]").appendTo($("#main-panel"));
-            $("#main-panel div[role=form] .form-group:first").remove();
-            $("#nick").before('<input id="clantag" class="form-control" placeholder="Tag, e.g  \Lc" maxlength="10"><div class="input-group nick"></div>');
-            $("#nick").appendTo($(".nick"));
-            $(".nick").append('<span class="input-group-btn"><button id="stream-mode" class="btn active ogicon-eye"></button></span>');
-            $(".nick").after('<div class="input-group skin"><input id="skin" class="form-control" placeholder="Manual direct skin URL" maxlength="150"><input type="hidden" id="color" value="' + ogarcopythelb.color + '" maxlength="7" /><span class="input-group-addon"><i></i></span><span class="input-group-btn"><button id="hide-url" class="btn active ogicon-eye" style="display: none"></button></span></div>');
-            $('#stream-mode').before('<button id="opennamechars" class="btn btn-info" style="background-color: transparent;" onclick="opennamechars();return false;"><i class="fa fa-language"></i></button>');
-            $('#opennamechars').tooltip({
-                title: "Design Nickname Font",
-                placement: "bottom"
-            });
-            $('#hide-url').before('<button id="openskinchanger" class="btn btn-info" style="background-color: transparent;" onclick="BeforeReportFakesSkin();return false;"><i class="fa fa-wpexplorer"></i></button>');
-            $('#openskinchanger').attr('placeholder', 'Name').tooltip({
-                title: "Flag the Fake's Skin",
-                placement: "bottom"
-            });
-            $("#locationKnown, #locationUnknown").insertAfter($(".skin"));
-            $("#region").before('<button class="btn btn-warning btn-server-info ogicon-cogs" style="display: none;"></button>');
-            $(".btn-spectate, .btn-logout").appendTo("#agario-main-buttons");
-            $("#agario-main-buttons").addClass("clearfix").before('<div id="server-info" class="form-group clearfix"><input id="server-ws" class="form-control" placeholder="Server WS" style="display: none;">' +
-                '<button id="server-reconnect" class="btn btn-primary ogicon-redo2" style="display: none;"></button><input id="server-token" class="form-control" placeholder="Server token"><button id="server-join" class="btn btn-success" data-itr="page_join_party">Join</button></div>');
-            $(".btn.btn-warning.btn-server-info.ogicon-cogs").after('<button id="server-reconnect" class="btn btn-success" style="display: inline-block; float: left; width: 11%; text-transform: capitalize;"><i class="fa fa-refresh"></i></button>');
-            $("#server-join").after('<div id="ogario-party" class="clearfix"><input id="party-token" class="form-control" placeholder="Party token"></div>');
-            $(".clearfix").show();
-            $("#ogario-party").append('<button id="join-party-btn-2" class="btn btn-success" data-itr="page_join_party">Join</button><button id="create-party-btn-2" class="btn btn-primary" data-itr="page_create_party" style="display: none;">Create</button>');
-            $("#pre-join-party-btn:first, #join-party-btn:first, #create-party-btn:first, #leave-party-btn:first, #joinPartyToken:first, .party-icon-back:first").appendTo($("#ogario-party"));
-            $("#settingsChoice, #options").appendTo($("#og-settings .submenu-panel"));
-            $("#stats").appendTo($("#main-menu")).addClass("menu-panel");
-            $("#statsContinue").attr("id", "statsContinue2");
-            $("#mainPanel").empty().remove();
-            $(".center-container").addClass("ogario-menu");
-            $(".center-container").append('<div id="menu-footer" class="menu-main-color"> <a href="https://jimboy3100.github.io" target="_blank">jimboy3100.github.io</a> | ' + this.version + ' <a href="https://jimboy3100.github.io" class="release ogicon-info" target="_blank"></a></div>');
-            $("#leftPanel, #rightPanel").addClass("ogario-menu").removeAttr("id");
-            $(".agario-profile-panel, .agario-panel-freecoins, .agario-panel-gifting, .agario-shop-panel, #dailyquests-panel").appendTo($("#profile")).removeClass("agario-side-panel");
-            $(".agario-profile-panel").after('<div id="block-warn">' + textLanguage.blockWarn + '<br><a href="#" id="unblock-popups">' + textLanguage.unblockPopups + "</a></div>");
-            $("#exp-bar").addClass("agario-profile-panel"), $(".left-container").empty();
-            //$(".agario-shop-panel").after('<div class="agario-panel ogario-yt-panel"><h5 class="menu-main-color">The Legend Mod Project</h5><div class="g-ytsubscribe" data-channelid="UCoj-ZStcJ0jLMOSK7FOBTbA" data-layout="full" data-theme="dark" data-count="default"></div></div>');
-
-            $("#tags-container").appendTo($("#profile"));
-            //$('.btn.btn-warning.btn-spectate.btn-needs-server').after('<button id="logoutbtn" onclick="logout(); return false;" class="btn btn-danger btn-logout" data-itr="page_logout">Logout</button>');
-            //$(".btn-logout").appendTo($("#profile"));
-            $(".left-container").append('<div id="quick-menu" class="agario-panel agario-side-panel"><a href="https://jimboy3100.github.io/skins/" class="quick-more-skins ogicon-grin" target="_blank" data-toggle="tab-tooltip" data-placement="left" title="' + textLanguage.skins + '"></a>' +
-                //'<a href="https://www.youtube.com/watch?v=CnIfNSpCf70" class="quick-yt ogicon-youtube2" id="legendid" target="_blank" data-toggle="tab-tooltip" data-placement="left" title="Legend Promo Video"></a>' +
-                '<a id= "themesBtn" target="_blank" href="https://jimboy3100.github.io/themes/" class="fa fa-tint" data-toggle="tab-tooltip" data-container="body" data-placement="left" title="" data-original-title="Themes"></a>' +
-                //'<a id= "LegGoogleForm" class="fa fa-check-square-o" data-toggle="tab-tooltip" data-container="body" data-placement="left" title="" data-original-title="New Ideas & Statistics Form" onclick="legendformIframe();return false;"></a>' +
-                '<a id= "ModInfoQuick" class="fa fa-info" data-toggle="tab-tooltip" data-container="body" data-placement="left" title="" data-original-title="Mod Info & Templates" onclick="openhelper();return false;"></a>' +
-                '<a id= "ModReward" class="fa fa-gift " data-toggle="tab-tooltip" data-container="body" data-placement="left" title="" data-original-title="Reward day" onclick="LMrewardDay();return false;"></a>');
-            //'<a id= "LegendClanDiscord" href="https://discord.gg/CbMkY77" target="_blank" class="fa fa-globe" data-toggle="tab-tooltip" data-container="body" data-placement="left" title="" data-original-title="Legend clan Discord"></a></div>');
-
-            //<input type="number" id="captchaSpeed" value="1" step="1" placeholder="CPU cores" min=1 max=${CPUamount} spellcheck="false" style="display:inline-block;">
-            //<span id="captchaErrors" style="display:inline-block;">Errors: <span id="captchaErrors1">0</span></span>
-            //<div2><button id="instant" class="btn btn-success">Instant (only for testers)</button></div2>
-            //var CPUamount=window.navigator.hardwareConcurrency-1;
-            $(".left-container").append(`<div id="quick-bots" class="agario-panel agario-side-panel"><h2 id="botsInfo"></h2>									
-					<h5 id="botsAuthor" class="main-color">Party bots</h5>
-					<div id="botClient" style="margin-left:15px; margin-right:15px; font-family: Tahoma; color: rgb(255, 255, 255); z-index: 9999; border-radius: 5px; min-height: 16px; min-width: 200px; background-color: rgba(2, 0, 0, 0.4);">
-					<div><b>Bot Count</b>: <span id="botCount" class="label label-info pull-right">Waiting</span></div>
-					<b><div><b>ServerSlots</b>: <span id="slots" class="label label-info pull-right">Waiting</span></div>
-					<b><div><b>Captcha tokens</b>: <span id="captchatokens" class="label label-info pull-right">0</span></div>
-					</b></div>	
-					<span id="statusTextBots">Status: <b id="userStatus">Disconnected</b></span>
-					<span id="aiTextBots">Bots AI: <b id="botsAI">Disabled</b></span>
-					<br>
-					<input type="text" id="botsNameLM" placeholder="Bots Name" maxlength="15" spellcheck="false" style="display:inline-block;">
-					<input type="number" id="botsAmount" placeholder="Bots Amount" min="1" max="190" spellcheck="false">
-
-					
-					<input type="text" id="botsRemoteIP" placeholder="ws://localhost:1337" maxlength="100" spellcheck="false">
-					<br>
-					<button id="connectBots" class="btn btn-success">Connect</button>
-					<br>
-					<button id="startBots" class="btn btn-primary btn" disabled>Start Bots</button>
-					
-					<button id="stopBots" class="btn btn-danger">Stop Bots</button>				
-					<br><u><a href="https://github.com/jimboy3100/jimboy3100.github.io/tree/master/ExampleScripts/agario-bots2" target="_blank">Installation</a></u>	
-					<u><a href="https://www.youtube.com/watch?v=rQMhxwIytro&feature=youtu.be" target="_blank">Tutorial video for PC node.js</a></u>	
-					<u><a href="https://repl.it/@legendmod/party-bots" target="_blank">Repl.it VPS</a></u>	
-					<u><a href="https://www.youtube.com/watch?v=xIupgFR7ZTY" target="_blank">Tutorial video for repl.it VPS</a></u>	
-					<br>
-					<div2><i>Tip:Connect more PC on the same Websocket, and keep them create tokens</i></div2>					
-					</div>`);
-            if (!this.protocolMode) $("#quick-menu").prepend('<a href="#" class="quick-shop ogicon-cart" data-toggle="tab-tooltip" data-placement="left" title="' + textLanguage.page_shop + '"></a><a href="#" class="quick-free-coins ogicon-coin-dollar" data-toggle="tab-tooltip" data-placement="left" title="' + textLanguage.page_menu_main_free_coins + '"></a><a href="#" class="quick-free-gifts ogicon-gift" data-toggle="tab-tooltip" data-placement="left" title="' + textLanguage.page_menu_main_gifts + '"></a><a href="#" class="quick-quests ogicon-trophy" data-toggle="tab-tooltip" data-placement="left" title="' + textLanguage.page_menu_main_dailyquests + '"></a>');
-            $(".party-dialog, .partymode-info").remove();
-            $(".agario-party-6").appendTo($(".center-container"));
-            $(".right-container").empty();
-            $(".right-container").append('<div class="agario-party"></div>');
-            $(".agario-party-6").appendTo($(".agario-party")).addClass("agario-panel agario-side-panel");
-            $(".agario-party h4, #cancel-party-btn").remove();
-            $(".agario-party .btn").addClass("btn-sm");
-            $(".right-container").append('<div id="skins-panel" class="agario-panel agario-side-panel"><div id="skins"></div><a href="https://jimboy3100.github.io/skins/" id="more-skins" class="btn btn-block btn-success" target="_blank">' + textLanguage.moreSkins + "</a></div>");
-            $(".btn-settings, .text-muted, .tosBox, .agario-promo, #agario-web-incentive, span[data-itr='page_option_dark_theme'], #options #darkTheme").remove();
-            $("#advertisement, #adbg, #a320x250, #g320x250, #s320x250, #adsBottom").css("display", "none");
-            $("#advertisement").removeClass("agario-panel"), $("#adsBottom").css({
-                "z-index": "1",
-                "opacity": "0",
-                "bottom": "-100px"
-            });
-            $("#noNames, #showMass").remove();
-            $("#og-settings .submenu-panel").append('<div id="og-options"></div>');
-            //this.addOptions(["unlockedFPS"], "animationGroup");
-            this.addOptions([], "animationGroup");
-
-            this.addOptions(["autoZoom"], "zoomGroup");
-            this.addOptions([], "boardGroup");
-            this.addOptions(["quickResp", "autoResp", "spawnSpecialEffects"], "respGroup");
-            this.addOptions(["noNames", "optimizedNames", "autoHideNames", "hideMyName", "hideTeammatesNames", "namesStroke"], "namesGroup");
-            this.addOptions(["showMass", "optimizedMass", "autoHideMass", "hideMyMass", "hideEnemiesMass", "shortMass", "virusSpikes", "virMassShots", "massStroke", "virusSound", "potionsDrinker"], "massGroup");
-            this.addOptions(["noSkins", "customSkins", "vanillaSkins", "jellyPhisycs", "suckAnimation", "videoSkins", "videoDestorted", "videoSkinsMusic2", "videoOthersSkinSoundLevelproportion"], "skinsGroup");
-            //this.addOptions(["optimizedFood", "autoHideFood", "autoHideFoodOnZoom", "rainbowFood"], "foodGroup");
-			this.addOptions(["autoHideFood", "autoHideFoodOnZoom", "rainbowFood"], "foodGroup");
-            this.addOptions(["noColors", "myCustomColor", "myTransparentSkin", "transparentSkins", "transparentCells", "transparentViruses", "virusGlow", 'cellContours', "animatedRainbowColor"], "transparencyGroup");
-            this.addOptions(["showGrid", "showOptimisedGrid", "showBgSectors", "showMapBorders", "borderGlow"], "gridGroup");
-			this.addOptions(["disableChat", "chatSounds", "chatEmoticons", "showChatImages", "showChatVideos", "showChatBox", "showChat", "showChatMyOwn", "showChatTranslation", "coloredNicks", "hidecountry"], "chatGroup");
-            //this.addOptions(["disableChat", "chatSounds", "chatEmoticons", "showChatImages", "showChatVideos", "showChatBox", "showChat", "showChatMyOwn", "showChatTranslation", "coloredNicks", "hidecountry", "universalChat"], "chatGroup");
-            this.addOptions(["rotateMap", "showMiniMap", "showMiniMapGrid", "showMiniMapGuides", "showExtraMiniMapGuides", "showMiniMapGhostCells", "oneColoredTeammates"], "miniMapGroup");
-            //            this.addOptions(["oppColors", "oppRings", "virColors", "splitRange", "qdsplitRange", "sdsplitRange", "virusesRange", "cursorTracking", "FBTracking", "bubbleInd", "bubbleCursorTracker", "onlineStatus", "teammatesInd", "showGhostCells", "showGhostCellsInfo", "reverseTrick", "showPartyBots"], "helpersGroup"); //Sonia2
-            //this.addOptions(["oppColors", "oppRings", "virColors", "splitRange", "qdsplitRange", "sdsplitRange", "virusesRange", "cursorTracking", "FBTracking", "bubbleInd", "bubbleCursorTracker", "onlineStatus", "teammatesInd", "showGhostCells", "showGhostCellsInfo", "showPartyBots"], "helpersGroup"); //Sonia2
-			this.addOptions(["oppColors", "oppRings", "virColors", "splitRange", "qdsplitRange", "sdsplitRange", "virusesRange", "cursorTracking", "FBTracking", "bubbleInd", "bubbleCursorTracker", "onlineStatus", "teammatesInd", "showGhostCells", "showGhostCellsInfo"], "helpersGroup"); //Sonia2
-            //this.addOptions(["mouseSplit", "mouseFeed", "mouseInvert", "mouseWheelClick"], "mouseGroup");
-			this.addOptions(["stickyCell", "mouseSplit", "mouseFeed", "mouseWheelClick", "mouseCommand4", "mouseCommand5"], "mouseGroup");
-//	
-			Settings.addPresetBox3('#mouseSplit', 'mouseSplit2', hotkeysCommand, 'preset', 'changeleftCmd');
-			$("#mouseSplit2 option[value=" + defaultmapsettings.leftClick + "]").prop('selected', 'selected').change();
-			Settings.addPresetBox3('#mouseFeed', 'mouseFeed2', hotkeysCommand, 'preset', 'changerightCmd');	
-			$("#mouseFeed2 option[value=" + defaultmapsettings.rightClick + "]").prop('selected', 'selected').change();
-			Settings.addPresetBox3('#mouseWheelClick', 'mouseWheelClick2', hotkeysCommand, 'preset', 'changemiddleCmd');	
-			$("#mouseWheelClick2 option[value=" + defaultmapsettings.middleClick + "]").prop('selected', 'selected').change();		
-			Settings.addPresetBox3('#mouseCommand4', 'mouseCommand42', hotkeysCommand, 'preset', 'change4Cmd');	
-			$("#mouseCommand42 option[value=" + defaultmapsettings.mouse4Click + "]").prop('selected', 'selected').change();		
-			Settings.addPresetBox3('#mouseCommand5', 'mouseCommand52', hotkeysCommand, 'preset', 'change5Cmd');	
-			$("#mouseCommand52 option[value=" + defaultmapsettings.mouse5Click + "]").prop('selected', 'selected').change();					
-//
-            //this.addOptions(["showTop5", "showTargeting", "showLbData", "centeredLb", "normalLb", "fpsAtTop", "tweenMaxEffect"], "hudGroup"),
-            this.addOptions(["showTop5", "showTargeting", "showLbData", "centeredLb", "fpsAtTop", "tweenMaxEffect", "top5skins"], "hudGroup");
-            this.addOptions(["showStats", "showStatsMass", "showStatsESTE", "showStatsEMTE", "showStatsMTE", "showStatsSTE", "showStatsTTE", "showStatsPTE", "showStatsN16", "showStatsFPS", "showStatsRender", "gameOverStats", "showTime", "showDevConsole"], "statsGroup");
-            this.addOptions(["oneColoredSpectator", "multiBoxShadow", "multiKeepMoving", "middleMultiViewWhenClose", "middleMultiView"], "multiBox");
-            this.addOptions([], "macroGroup");
-            this.addOptions([], "profiles");
-            if (!this.protocolMode) {
-                this.addOptions(["blockPopups"], "extrasGroup");
-            } else {
-                $("#noSkins, #noColors, #skipStats, #showQuest").addClass("js-switch-vanilla");
-                //$(".skinsGroup h5").after('<label class="noSkins">' + textLanguage.noSkins + " </label>");
-                //$("#noSkins").appendTo($(".noSkins")); 
-                //$(".transparencyGroup h5").after('<label class="noColors">' + textLanguage.noColors + " </label>");
-                //$("#noColors").appendTo($(".noColors"));
-                $(".extrasGroup h5").after('<label class="skipStats">' + textLanguage.skipStats + " </label>");
-                $("#skipStats").appendTo($(".skipStats"));
-                $(".skipStats").after('<label class="showQuest">' + textLanguage.showQuest + " </label>");
-                $("#showQuest").appendTo($(".showQuest"));
-                $("#options").remove();
-                $("#settingsChoice").appendTo($(".extrasGroup")).addClass("select-wrapper");
-            }
-            this.addSliderBox(".animationGroup", "animation", 5, 200, 1);
-
-            this.addSliderBox(".zoomGroup", "zoomSpeedValue2", -0.90, 0.90, 0.01);
-            this.addSliderBox(".skinsGroup", "videoSkinSoundLevel", 0, 1, 0.01);
-            this.addSliderBox(".boardGroup", "leaderboardlimit", 10, 30, 5);
-            this.addSliderBox(".boardGroup", "teamboardlimit", 5, 40, 5);
-
-            this.addSliderBox(".profiles", "profileNumber", 10, 54, 1);
-            this.addSliderBox(".macroGroup", "macroFeeding", 1, 160, 1);
-            //this.addSliderBox(".massGroup", "hideSizes", 0, 37, 1);
-            $("#og-settings").append('<button class="btn btn-block btn-success btn-export">' + textLanguage.exportImport + "</button>");
-            $("#og-settings").append('<div class="restore-settings"><a href="#">' + textLanguage.restoreSettings + "</a></div>");
-            $("#music").append('<div class="agario-panel radio-panel"><h5 class="menu-main-color">Radio (' + textLanguage.thanks + ')</h5><audio src="" controls></audio><span class="playlist"><span class="ogicon-file-music"></span> <a href="" target="_blank">' + textLanguage.playlist + "</a></span></div>");
-            $("#music").append('<div class="agario-panel sounds-panel"><h5 class="menu-main-color">' + textLanguage.sounds + "</h5></div>");
-            $("#music").append('<div class="agario-panel ogario-yt-panel"><h5 class="menu-main-color">Legend Clan (tag: \u24c2)</h5><div class="g-ytsubscribe" data-channelid="UCoj-ZStcJ0jLMOSK7FOBTbA" data-layout="full" data-theme="dark" data-count="default"></div></div>');
-            /*$('#music').append('<div class="agario-panel facebook-panel"><h5 class="menu-main-color">' + 'Facebook' + '</h5></div>'),*/
-            this.addInputBox(".sounds-panel", "messageSound", "Sound URL", "setMessageSound");
-            this.addInputBox(".sounds-panel", "commandSound", "Sound URL", "setCommandSound");
-            this.addInputBox(".sounds-panel", "virusSoundurl", "Sound URL", "setvirusSound");
-            $("body").append('<div id="overlays-hud" data-gamemode=":ffa"><div id="stats-hud" class="hud stats-hud-color"></div> <div id="top5-hud" class="hud"><h5 class="hud-main-color" style="font-size: 19px">Team<span class="team-top"></span></h5><ol id="top5-pos"></ol><div id="top5-total"><span class="hud-main-color ogicon-users"></span> ' + //<div class="hud-main-color team-top-menu"><a href="#" data-limit="5" class="team-top-limit active">5</a> | <a href="#" data-limit="10" class="team-top-limit">10</a> | <a href="#" data-limit="100" class="team-top-limit">100</a></div><ol id="top5-pos"></ol><div id="top5-total"><span class="hud-main-color ogicon-users"></span> ' +
-                textLanguage.totalPartyPlayers + ': <span id="top5-total-players" class="top5-mass-color">0</span>   <span class="hud-main-color ogicon-pacman"></span> ' +
-                textLanguage.totalPartyMass + ': <span id="top5-total-mass" class="top5-mass-color">0</span></div></div> <div id="time-hud" class="hud time-hud-color"></div> <div id="pause-hud" class="hud">' +
-                //textLanguage.pause + '</div> <div id="leaderboard-hud" class="hud-b"><h5 class="hud-main-color">jimboy3100.github.io</h5><div id="leaderboard-data"></div><div id="leaderboard-positions"></div></div> <div id="btl-leaderboard-hud"><div class="hud hud-c"><span id="btl-players-status">Players ready</span>: <span id="btl-players-count">0</span></div></div> <div id="minimap-hud" class="hud-b"><canvas id="minimap-sectors"></canvas><canvas id="minimap"></canvas></div><div id="target-hud" class="hud"><div id="target-player"><span id="target-skin"><img src="https://jimboy3100.github.io/banners/static/img/blank.png" alt=""> </span><span id="target-nick"></span><span id="target-status" class="hud-main-color">' + //class="hud-main-color">[' +
-                textLanguage.pause + '</div> <div id="leaderboard-hud" class="hud-b"><h5 class="hud-main-color">' + textLanguage.leaderboard + '</h5><div id="leaderboard-data"></div><div id="leaderboard-positions"></div></div> <div id="btl-leaderboard-hud"><div class="hud hud-c"></div></div> <div id="minimap-hud" class="hud-b"><canvas id="minimap-sectors"></canvas><canvas id="minimap"></canvas></div><div id="target-hud" class="hud"><div id="target-player"><span id="target-skin"><img src="https://jimboy3100.github.io/banners/static/img/blank.png" alt=""> </span><span id="target-nick"></span><span id="target-status" class="hud-main-color">' + //class="hud-main-color">[' +
-                textLanguage.targetNotSet + '</span></div><div id="target-summary"></div></div><div id="target-panel-hud" class="hud">' +
-                '<a href="#" id="set-debug" class="ogicon-location"></a>' +
-                '<a href="#" id="set-fullSpectator" class="ogicon-eye"  style="display: none"></a>' +
-                '<a href="#" id="set-ingameSpectator" class="ogicon-power"  style="display: none"></a>' +
-                '<a href="#" id="fullscreenBtn" onclick="toggleFullScreen();"  class="ogicon-display"></a>' +
-                '<a href="#" id="RotateLeft" onclick="rotateminimapsectors();"  class="ogicon-loop2"></a>' +
-                '<a href="#" id="Bino" onclick="legendmod.sendFreeSpectate()"  class="ogicon-pacman"></a>' +
-                '<a href="#" id="set-targeting" class="ogicon-target"></a>' +
-                '<a href="#" id="set-private-minimap" class="ogicon-location2"></a>' +
-                '<a href="#" id="cancel-targeting" class="ogicon-cancel-circle"></a>' +
-                '<a href="#" id="change-target" class="ogicon-arrow-right"></a></div>' +
-                '<div id="quest-hud" class="hud"></div> <div id="btl-hud" class="hud"></div></div>');
-            $("body").append('<ul id="messages"></ul>');
-            $("body").append('<div id="message-box"><div id="chat-emoticons"></div><div id="message-menu"><a href="#" class="chat-sound-notifications ogicon-volume-high"></a><a href="#" class="chat-active-users ogicon-user-check"></a><a href="#" class="chat-muted-users ogicon-user-minus"></a><a href="#" class="show-chat-emoticons ogicon-smile"></a></div><input type="text" id="message" class="form-control" placeholder="' +
-                textLanguage.enterChatMsg + '..." maxlength="80"></div>');
-            $("body").append('<div id="chat-box"></div>');
-            //$("#chat-emoticons").disMojiPicker();
-			if ($("#chat-emoticons").disMojiPicker) $("#chat-emoticons").disMojiPicker();
-			var Opera = (navigator.userAgent.match(/Opera|OPR\//) ? true : false);
-			if (Opera){
-				$("#chat-emoticons").click(emoji => document.getElementById("message").value += emoji.target.textContent);
-			}
-			else{
-				$("#chat-emoticons").picker(emoji => document.getElementById("message").value += emoji);
-			}
-			
-
-			//var twemoji; if (twemoji) twemoji.parse(document.getElementsByClassName("emoji-content")[0]); this needs on LMexpress.sniff3.js
-			//var twemoji; if (twemoji) twemoji.parse(document.body);
-			/*
-			for (const emoji in emoticonicons) {
-                if (emoticonicons.hasOwnProperty(emoji)) {
-                    $("#chat-emoticons").append('<img src="https://jimboy3100.github.io/banners/emoticons/' + emoticonicons[emoji] + '" alt="' + emoji + '" class="emoticon">');
-                }
-            }*/
-            $("body").append('<div id="exp-imp"><div id="exp-imp-menu"><button id="close-exp-imp" class="btn btn-danger">' + textLanguage.close + '</button></div><div id="exp-imp-settings"></div></div>');
-            $("#exp-imp-settings").append("<h1>" + textLanguage.exportSettings + "</h1><h2>" + textLanguage.exportInfo + "</h2>");
-            this.addOption("#exp-imp-settings", "export-ogarioCommands", textLanguage.commands, true);
-            this.addOption("#exp-imp-settings", "export-ogarioHotkeys", textLanguage.hotkeys, true);
-            this.addOption("#exp-imp-settings", "export-ogarioPlayerProfiles",
-                textLanguage.profiles, true), this.addOption("#exp-imp-settings", "export-ogarioSettings", textLanguage.settings, true);
-            this.addOption("#exp-imp-settings", "export-ogarioThemeSettings", textLanguage.theme, true);
-            $("#exp-imp-settings").append('<textarea id="export-settings" class="form-control" rows="14" cols="100" spellcheck="false" readonly /><button id="export-settings-btn" class="btn btn-block btn-success">' + textLanguage.exportSettings + "</button>");
-            $("#exp-imp-settings").append("<h1>" + textLanguage.importSettings + "</h1><h2>" +
-                textLanguage.importInfo + "</h2>"), this.addOption("#exp-imp-settings", "import-ogarioCommands", textLanguage.commands, true);
-            this.addOption("#exp-imp-settings", "import-ogarioHotkeys", textLanguage.hotkeys, true);
-            this.addOption("#exp-imp-settings", "import-ogarioPlayerProfiles", textLanguage.profiles, true);
-            this.addOption("#exp-imp-settings", "import-ogarioSettings", textLanguage.settings, true);
-            this.addOption("#exp-imp-settings", "import-ogarioThemeSettings", textLanguage.theme, true);
-            $("#exp-imp-settings").append('<textarea id="import-settings" class="form-control" rows="14" cols="100" spellcheck="false" /><button id="import-settings-btn" class="btn btn-block btn-success">' +
-                textLanguage.importSettings + "</button>");
-            if (Settings) Settings.setThemeMenu();
-            /** @type {number} */
-            var e = 0;
-            for (; e < profiles.length; e++) {
-                $("#skins").append('<div class="skin-box"><a href="#profile-' + e + '" id="profile-' + e + '" data-profile="' + e + '"></a></div>');
-                this.setSkinPreview(profiles[e].skinURL, "profile-" + e);
-                if (e === this.selectedProfile) {
-                    $("#profile-" + e).addClass("selected");
                 }
             }
         },
@@ -8810,7 +8550,6 @@ window.MouseClicks=[];
             this.loadSettings();
             this.loadProfiles();
             this.setLang();
-            this.setMenu();
             this.setUI();
             if (Settings) {
                 Settings.setTheme();
