@@ -4,7 +4,7 @@
 // @version      2024-04-21
 // @description  A bare metal client for Agar.io
 // @author       Felix
-// @match        agar.io
+// @match        agar.io/*
 // @grant        none
 // ==/UserScript==
 
