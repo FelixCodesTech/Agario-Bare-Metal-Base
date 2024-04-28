@@ -63,19 +63,19 @@ function calcTarget() {
     }
 
     var distcounterflag = 0;
-    let shortestDistanceEnemy = 10000;
-    let shortestDistanceFood = 10000;
+    let shortestDistanceEnemy = 1000000;
+    let shortestDistanceFood = 1000000;
 
     Object.keys(window.legendmod.cells).forEach(node => { //function to define and act to cells
         distcounterflag++
         PlayerCell = window.legendmod.cells[node];
         let distancePlayerCell = calcDist(PlayerCell.x, PlayerCell.y);
         if (PlayerCell.nick != window.legendmod.playerNick && PlayerCell.isVirus == false) { // if not me
-            if (calcDist(PlayerCell.x, PlayerCell.y) - PlayerCell.size/10 < shortestDistanceEnemy && PlayerCell.size > window.legendmod.playerSize) {
+            if (calcDist(PlayerCell.x, PlayerCell.y) - PlayerCell.size/10 < shortestDistanceEnemy && PlayerCell.size > window.legendmod.playerSize * 1.15) {
                 shortestDistanceEnemy = calcDist(PlayerCell.x, PlayerCell.y);
                 target.x = 2 * window.legendmod.playerX - PlayerCell.x;
                 target.y = 2 * window.legendmod.playerY - PlayerCell.y;
-            } else if (PlayerCell.size < window.legendmod.playerSize && calcDist(PlayerCell.x, PlayerCell.y) < shortestDistanceFood) {
+            } else if (PlayerCell.size * 1.15 < window.legendmod.playerSize && calcDist(PlayerCell.x, PlayerCell.y) < shortestDistanceFood) {
                 shortestDistanceFood = calcDist(PlayerCell.x, PlayerCell.y);
             }
         }
@@ -84,6 +84,9 @@ function calcTarget() {
     if (shortestDistanceFood < shortestDistanceEnemy) {
         target.x = PlayerCell.x;
         target.y = PlayerCell.y;
+    } else if (shortestDistanceEnemy == shortestDistanceFood) { // Meaning there has no cell been detected bc values unchanged
+        target.x = legendmod.playerX;
+        target.y = legendmod.playerY;
     }
 
     if (target != undefined) { //not needed
