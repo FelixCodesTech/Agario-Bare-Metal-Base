@@ -77,13 +77,14 @@ function calcTarget() {
                 target.y = 2 * window.legendmod.playerY - PlayerCell.y;
             } else if (PlayerCell.size < window.legendmod.playerSize && calcDist(PlayerCell.x, PlayerCell.y) < shortestDistanceFood) {
                 shortestDistanceFood = calcDist(PlayerCell.x, PlayerCell.y);
-                if (shortestDistanceFood < shortestDistanceEnemy) {
-                    target.x = PlayerCell.x;
-                    target.y = PlayerCell.y;
-                }
             }
         }
     });
+
+    if (shortestDistanceFood < shortestDistanceEnemy) {
+        target.x = PlayerCell.x;
+        target.y = PlayerCell.y;
+    }
 
     if (target != undefined) { //not needed
         window.legendmod.sendPosition(target);
