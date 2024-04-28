@@ -74,7 +74,8 @@ function calcTarget() {
             if (PlayerCell.isVirus == false) {
                 if (calcDist(PlayerCell.x, PlayerCell.y) < shortestDistanceEnemy) {
                     shortestDistanceEnemy = calcDist(PlayerCell.x, PlayerCell.y);
-                    target = PlayerCell;
+                    target.x = 2 * window.legendmod.playerX - PlayerCell.x;
+                    target.y = 2 * window.legendmod.playerY - PlayerCell.y;
                 }
             }
         }
