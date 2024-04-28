@@ -10,6 +10,39 @@ loadericon();
 
 getaccesstoken();
 
+/*
+var CutNameConflictwithMessage=false;
+(function(){
+    var _privateLog = console.log;
+    console.log = function (message) {
+		if (CutNameConflictwithMessage==false){
+		if (~message.indexOf("OGARio by szymy")){
+		console.log = _privateLog;
+		}
+		else{
+			_privateLog.apply(console, arguments);
+		}
+		}
+    };
+})();
+
+(function(){
+    var _privateLog = console.log;
+    console.log = function (message) {
+		if (~message.indexOf("OGARio by szymy")){
+		}
+		else{
+			_privateLog.apply(console, arguments);
+		}
+    };
+})();
+*/
+//chat Translations
+findUserLang();
+if (window.userLanguage){
+	startTranslating()
+}
+
 window.proLicenceUID = localStorage.getItem("proLicenceUID");	
 if (window.proLicenceUID=="null") window.proLicenceUID=null
 var currentIP = "0.0.0.0:0";
@@ -6472,6 +6505,45 @@ function populateBanListConfig() {
     }
 }
 
+
+
+function findUserLang(){
+if (window.navigator.languages){
+	if (window.navigator.languages[0] && (window.navigator.languages[0]=="en" || window.navigator.languages[1].includes('-'))){
+		if(window.navigator.languages[1] && (window.navigator.languages[1]=="en" || window.navigator.languages[1].includes('-'))){
+			if(window.navigator.languages[2] && (window.navigator.languages[2]=="en" || window.navigator.languages[2].includes('-'))){
+				if(window.navigator.languages[3] && !(window.navigator.languages[2]=="en" || window.navigator.languages[2].includes('-'))) window.userLanguage=window.navigator.languages[3]
+			}
+			else window.userLanguage=window.navigator.languages[2]
+		}
+		else window.userLanguage=window.navigator.languages[1]
+	}
+	else window.userLanguage=window.navigator.languages[0]
+}
+}
+
+function startTranslating() {
+
+var targetNode = document.querySelector("#chat-box");
+var observerOptions = {
+  childList: true,
+  attributes: false,
+  subtree: false //Omit or set to false to observe only changes to the parent node.
+};
+
+var observerMut = new MutationObserver(callbackMut);
+
+function callbackMut(mutationList, observerMut) {
+  mutationList.forEach((mutation) => {
+	if(defaultmapsettings.showChatTranslation && targetNode.lastChild.classList.contains('message') && !targetNode.lastChild.classList.contains('command') ) {	
+      doMainTranslation(targetNode,targetNode.lastChild.lastChild.firstChild.textContent)
+	  }
+  });
+};
+
+observerMut.observe(targetNode, observerOptions);
+
+}
 function doMainTranslation(targetNode,bb){
 	//if(targetNode.lastChild.classList.contains('message')) {
       var trText = document.createElement('span');
