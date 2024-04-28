@@ -73,8 +73,6 @@ function calcTarget() {
         if (PlayerCell.nick != window.legendmod.playerNick && PlayerCell.isVirus == false) { // if not me
             if (calcDist(PlayerCell.x, PlayerCell.y) - PlayerCell.size/10 < shortestDistanceEnemy && PlayerCell.size > window.legendmod.playerSize * 1.15) {
                 shortestDistanceEnemy = calcDist(PlayerCell.x, PlayerCell.y);
-                target.x = 2 * window.legendmod.playerX - PlayerCell.x;
-                target.y = 2 * window.legendmod.playerY - PlayerCell.y;
             } else if (PlayerCell.size * 1.15 < window.legendmod.playerSize && calcDist(PlayerCell.x, PlayerCell.y) < shortestDistanceFood) {
                 shortestDistanceFood = calcDist(PlayerCell.x, PlayerCell.y);
             }
