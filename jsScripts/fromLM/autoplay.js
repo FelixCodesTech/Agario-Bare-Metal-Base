@@ -71,7 +71,7 @@ function calcTarget() {
         PlayerCell = window.legendmod.cells[node];
         let distancePlayerCell = calcDist(PlayerCell.x, PlayerCell.y);
         if (PlayerCell.nick != window.legendmod.playerNick && PlayerCell.isVirus == false) { // if not me
-            if (calcDist(PlayerCell.x, PlayerCell.y) + PlayerCell.size*10 < shortestDistanceEnemy && PlayerCell.size > window.legendmod.playerSize) {
+            if (calcDist(PlayerCell.x, PlayerCell.y) + PlayerCell.size < shortestDistanceEnemy && PlayerCell.size > window.legendmod.playerSize) {
                 shortestDistanceEnemy = calcDist(PlayerCell.x, PlayerCell.y);
                 target.x = 2 * window.legendmod.playerX - PlayerCell.x;
                 target.y = 2 * window.legendmod.playerY - PlayerCell.y;
