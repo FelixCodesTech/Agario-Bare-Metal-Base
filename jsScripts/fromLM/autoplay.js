@@ -73,17 +73,21 @@ function calcTarget() {
         if (PlayerCell.nick != window.legendmod.playerNick && PlayerCell.isVirus == false) { // if not me
             if (calcDist(PlayerCell.x, PlayerCell.y) - PlayerCell.size/10 < shortestDistanceEnemy && PlayerCell.size > window.legendmod.playerSize * 1.15) {
                 shortestDistanceEnemy = calcDist(PlayerCell.x, PlayerCell.y) - PlayerCell.size/10;
-                target.x = 2 * window.legendmod.playerX - PlayerCell.x;
-                target.y = 2 * window.legendmod.playerY - PlayerCell.y;
+                shortestDistanceEnemyCell = PlayerCell;
+                
             } else if (PlayerCell.size * 1.15 < window.legendmod.playerSize && calcDist(PlayerCell.x, PlayerCell.y) < shortestDistanceFood) {
                 shortestDistanceFood = calcDist(PlayerCell.x, PlayerCell.y);
+                shortestDistanceFoodCell = PlayerCell;
             }
         }
     });
 
     if (shortestDistanceFood < shortestDistanceEnemy) {
-        target.x = PlayerCell.x;
-        target.y = PlayerCell.y;
+        target.x = shortestDistanceFoodCell.x;
+        target.y = shortestDistanceFoodCell.y;
+    } else if (shortestDistanceEnemy < shortestDistanceFood) {
+        target.x = 2 * window.legendmod.playerX - shortestDistanceEnemyCell.x;
+        target.y = 2 * window.legendmod.playerY - shortestDistanceEnemyCell.y;
     } else if (shortestDistanceEnemy == shortestDistanceFood) { // Meaning there has no cell been detected bc values unchanged
         target.x = legendmod.playerX;
         target.y = legendmod.playerY;
