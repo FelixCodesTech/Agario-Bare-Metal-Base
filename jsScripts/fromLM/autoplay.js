@@ -100,6 +100,9 @@ function calcTarget() {
                 target.x = food.x;
                 target.y = food.y;
             }
+
+            // Wait 0.1 second
+            setTimeout(function() {}, 100);
         }
     }
 
