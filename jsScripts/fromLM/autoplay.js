@@ -89,8 +89,18 @@ function calcTarget() {
         target.x = 2 * window.legendmod.playerX - shortestDistanceEnemyCell.x;
         target.y = 2 * window.legendmod.playerY - shortestDistanceEnemyCell.y;
     } else if (shortestDistanceEnemy == shortestDistanceFood) { // Meaning there has no cell been detected bc values unchanged
-        target.x = legendmod.playerX;
-        target.y = legendmod.playerY;
+        // find the nearest food
+        let shortestDistanceFood = 1000000;
+
+        for (var i = 0; i < window.legendmod.food.length; i++) {
+            var food = window.legendmod.food[i];
+            var dist = calcDist(food.x, food.y);
+            if (dist < bestDist) {
+                shortestDistanceFood = dist;
+                target.x = food.x;
+                target.y = food.y;
+            }
+        }
     }
 
     if (target != undefined) { //not needed
