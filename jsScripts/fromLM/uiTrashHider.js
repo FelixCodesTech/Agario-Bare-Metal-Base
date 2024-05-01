@@ -11,6 +11,7 @@ hideUI = function() {
         let element = allElements[i];
         if (element.tagName !== 'CANVAS') {
             element.style.cssText += cssToInject;
+            setTimeout(function() {}, 300);
         }
     }
 }
