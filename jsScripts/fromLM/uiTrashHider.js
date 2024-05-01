@@ -1,9 +1,10 @@
 // This script aims to remove (by hiding it via css) the trash UI we dont need
-// it makes everything invisible, except for <canvas>
+// it makes everything inside body invisible, except for <canvas>
 
 
 hideUI = function() {
-    let allElements = document.querySelectorAll('*');
+    let body = document.querySelector('body');
+    let allElements = body.querySelectorAll('*');
     let cssToInject = 'display: none;';
 
     // Main loop
@@ -11,7 +12,6 @@ hideUI = function() {
         let element = allElements[i];
         if (element.tagName !== 'CANVAS') {
             element.style.cssText += cssToInject;
-            setTimeout(function() {}, 300);
         }
     }
 }
