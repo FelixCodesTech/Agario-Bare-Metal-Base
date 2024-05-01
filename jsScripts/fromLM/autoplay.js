@@ -9,6 +9,7 @@ window.SmallerCellFlag = true;
 window.bestDist = 10000;
 window.giveMass = false;
 window.giveMassThreshhold = 100;
+window.giveMassProbability = 0.01;
 
 
 function calcTarget() {
@@ -109,7 +110,7 @@ function calcTarget() {
     }
 
     // Give away mass to randoms if you are big enough (optional advertising of something)
-    if (giveMass && Math.random() < 0.01 && window.legendmod.playerSize > giveMassThreshhold) {
+    if (giveMass && Math.random() <= giveMassProbability && window.legendmod.playerSize > giveMassThreshhold) {
         doFeed = true;
         target.x = shortestDistanceEnemyCell.x;
         target.y = shortestDistanceEnemyCell.y;
