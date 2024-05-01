@@ -14,3 +14,9 @@ hideUI = function() {
         }
     }
 }
+
+
+// Call the function after page has loaded
+window.onload = function() {
+    setTimeout(function() {hideUI();}, 3000);
+}
