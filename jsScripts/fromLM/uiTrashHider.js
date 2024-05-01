@@ -17,7 +17,7 @@ hideUI = function() {
 
 fixBodyPosition = function() {
     let body = document.getElementsByTagName('body')[0];
-    body.style.cssText += 'margin: 0;';
+    body.style.cssText += 'margin: 0; overflow: hidden;';
 }
 
 
