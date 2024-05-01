@@ -9,7 +9,7 @@ hideUI = function() {
     // Main loop
     for (let i = 0; i < allElements.length; i++) {
         let element = allElements[i];
-        if (element.tagName !== 'CANVAS' && element.tagName !== 'html' && element.tagName !== 'body' && element.tagName !== 'head') {
+        if (element.tagName !== 'CANVAS' && element.tagName !== 'HTML' && element.tagName !== 'BODY' && element.tagName !== 'HEAD') {
             element.style.cssText += cssToInject;
         }
     }
