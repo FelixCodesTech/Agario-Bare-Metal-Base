@@ -3,14 +3,13 @@
 
 
 hideUI = function() {
-    let body = document.querySelector('body');
-    let allElements = body.querySelectorAll('*');
+    let allElements = document.querySelectorAll('*');
     let cssToInject = 'display: none;';
 
     // Main loop
     for (let i = 0; i < allElements.length; i++) {
         let element = allElements[i];
-        if (element.tagName !== 'CANVAS') {
+        if (element.tagName !== 'CANVAS' && element.tagName !== 'html' && element.tagName !== 'body' && element.tagName !== 'head') {
             element.style.cssText += cssToInject;
         }
     }
