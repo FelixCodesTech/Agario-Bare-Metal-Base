@@ -9,7 +9,8 @@ window.SmallerCellFlag = true;
 window.bestDist = 10000;
 window.giveMass = false;
 window.giveMassThreshhold = 100;
-window.giveMassProbability = 0.01;
+window.giveMassProbability = 0.05;
+window.giveMassCellSizeDeviation = 2; // If cell is up to 15% bigger than you, you can give mass to it (imitate teaming)
 
 
 function calcTarget() {
@@ -68,18 +69,20 @@ function calcTarget() {
     var distcounterflag = 0;
     let shortestDistanceEnemy = 1000000;
     let shortestDistanceFood = 1000000;
+    let shortestDistanceEnemyCell;
+    let shortestDistanceFoodCell;
 
     Object.keys(window.legendmod.cells).forEach(node => { //function to define and act to cells
         distcounterflag++
         PlayerCell = window.legendmod.cells[node];
         let distancePlayerCell = calcDist(PlayerCell.x, PlayerCell.y);
         if (PlayerCell.nick != window.legendmod.playerNick && PlayerCell.isVirus == false) { // if not me
-            if (calcDist(PlayerCell.x, PlayerCell.y) - PlayerCell.size/10 < shortestDistanceEnemy && PlayerCell.size > window.legendmod.playerSize * 1.15) {
-                shortestDistanceEnemy = calcDist(PlayerCell.x, PlayerCell.y) - PlayerCell.size/10;
+            if (distancePlayerCell - PlayerCell.size/10 < shortestDistanceEnemy && PlayerCell.size > window.legendmod.playerSize * 1.1) {
+                shortestDistanceEnemy = distancePlayerCell - PlayerCell.size/10;
                 shortestDistanceEnemyCell = PlayerCell;
                 
-            } else if (PlayerCell.size * 1.15 < window.legendmod.playerSize && calcDist(PlayerCell.x, PlayerCell.y) < shortestDistanceFood) {
-                shortestDistanceFood = calcDist(PlayerCell.x, PlayerCell.y);
+            } else if (PlayerCell.size * 1.3 < window.legendmod.playerSize && distancePlayerCell < shortestDistanceFood) {
+                shortestDistanceFood = distancePlayerCell;
                 shortestDistanceFoodCell = PlayerCell;
             }
         }
@@ -110,7 +113,7 @@ function calcTarget() {
     }
 
     // Give away mass to randoms if you are big enough (optional advertising of something)
-    if (giveMass && Math.random() <= giveMassProbability && window.legendmod.playerSize > giveMassThreshhold) {
+    if (giveMass && Math.random() <= giveMassProbability && window.legendmod.playerSize > giveMassThreshhold && shortestDistanceEnemyCell && shortestDistanceEnemyCell.size < window.legendmod.playerSize * giveMassCellSizeDeviation) {
         doFeed = true;
         target.x = shortestDistanceEnemyCell.x;
         target.y = shortestDistanceEnemyCell.y;
