@@ -7,6 +7,7 @@ window.VirusFlag = true;
 window.BiggerCellFlag = true;
 window.SmallerCellFlag = true;
 window.bestDist = 10000;
+window.giveMass = false;
 
 
 function calcTarget() {
@@ -88,6 +89,13 @@ function calcTarget() {
     } else if (shortestDistanceEnemy < shortestDistanceFood) {
         target.x = 2 * window.legendmod.playerX - shortestDistanceEnemyCell.x;
         target.y = 2 * window.legendmod.playerY - shortestDistanceEnemyCell.y;
+
+        // Give away mass to randoms if you are big enough (optional advertising of something)
+        if (giveMass && Math.random() < 0.1 && window.legendmod.playerSize > 100) {
+            doFeed = true;
+            target.x = shortestDistanceEnemyCell.x;
+            target.y = shortestDistanceEnemyCell.y;
+        }
     } else if (shortestDistanceEnemy == shortestDistanceFood) { // Meaning there has no cell been detected bc values unchanged
         // find the nearest food
         let shortestDistanceFood = 1000000;
@@ -101,8 +109,8 @@ function calcTarget() {
                 target.y = food.y;
             }
 
-            // Wait 0.1 second
-            setTimeout(function() {}, 100);
+            // Wait 0.05 second
+            setTimeout(function() {}, 50);
         }
     }
 
