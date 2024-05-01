@@ -15,8 +15,14 @@ hideUI = function() {
     }
 }
 
+fixBodyPosition = function() {
+    let body = document.getElementsByTagName('body')[0];
+    body.style.cssText += 'margin: 0;';
+}
+
 
 // Call the function after page has loaded
 window.onload = function() {
-    setTimeout(function() {hideUI();}, 3000);
+    hideUI();
+    fixBodyPosition();
 }
